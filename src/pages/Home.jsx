@@ -1,7 +1,12 @@
-import TABLEGAME from "../components/Table";
+import TableGame from "../components/Table";
+import Header from "../components/header";
+import {Box} from "@mui/material";
 
 export default function Home() {
     return (
-        <TABLEGAME />
+        <Box>
+            <Header/>
+            <TableGame/>
+        </Box>
     )
 }

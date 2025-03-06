@@ -1,9 +1,9 @@
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
-export default function LigueFilter({ columnValues, selectedValue, setSelectedValue }) {
+export default function RegionFilter({ columnValues, selectedValue, setSelectedValue }) {
     return (
         <FormControl sx={{ minWidth: 200,marginLeft: "5%" }}>
             <InputLabel>Ligue</InputLabel>

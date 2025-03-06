@@ -8,34 +8,55 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
 import LigueFilter from "./LigueFilter";
+import { Box } from "@mui/material";
+import RegionFilter from "./RegionFilter";
 
 export default function TableGame() {
     const [data, setData] = useState([]);
-    const [selectedColumn, setSelectedColumn] = useState("");
-    const [columnValues, setColumnValues] = useState([]);
-    const [selectedValue, setSelectedValue] = useState("");
+
+    // État pour le filtre Ligue
+    const [selectedColumnLigue, setSelectedColumnLigue] = useState("");
+    const [columnValuesLigue, setColumnValuesLigue] = useState([]);
+    const [selectedValueLigue, setSelectedValueLigue] = useState("");
+
+    // État pour le filtre Région
+    const [selectedColumnRegion, setSelectedColumnRegion] = useState("");
+    const [columnValuesRegion, setColumnValuesRegion] = useState([]);
+    const [selectedValueRegion, setSelectedValueRegion] = useState("");
 
     useEffect(() => {
         axios.get("http://127.0.0.1:8000/api/data")
             .then(response => {
                 setData(response.data);
                 if (response.data.length > 0) {
-                    const columnIndex = 14;
-                    const columnKey = Object.keys(response.data[0])[columnIndex];
-                    setSelectedColumn(columnKey);
-                    setColumnValues([...new Set(response.data.map(row => row[columnKey]))]);
+                    const columnIndexLigue = 14;
+                    const columnKeyLigue = Object.keys(response.data[0])[columnIndexLigue];
+                    setSelectedColumnLigue(columnKeyLigue);
+                    setColumnValuesLigue([...new Set(response.data.map(row => row[columnKeyLigue]))]);
+
+                    const columnIndexRegion = 15;
+                    const columnKeyRegion = Object.keys(response.data[0])[columnIndexRegion];
+                    setSelectedColumnRegion(columnKeyRegion);
+                    setColumnValuesRegion([...new Set(response.data.map(row => row[columnKeyRegion]))]);
                 }
             })
             .catch(error => console.error("Erreur :", error));
     }, []);
 
     return (
-        <>
+        <Box>
             <LigueFilter
-                columnValues={columnValues}
-                selectedValue={selectedValue}
-                setSelectedValue={setSelectedValue}
-                columnName={selectedColumn}
+                columnValues={columnValuesLigue}
+                selectedValue={selectedValueLigue}
+                setSelectedValue={setSelectedValueLigue}
+                columnName={selectedColumnLigue}
+            />
+
+            <RegionFilter
+                columnValues={columnValuesRegion}
+                selectedValue={selectedValueRegion}
+                setSelectedValue={setSelectedValueRegion}
+                columnName={selectedColumnRegion}
             />
 
             <TableContainer component={Paper} sx={{ maxWidth: "90%", margin: "20px auto", borderRadius: "10px", boxShadow: 3 }}>
@@ -50,21 +71,24 @@ export default function TableGame() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data.filter(row => selectedValue === "" || row[selectedColumn] === selectedValue).map((row, index) => (
-                            <TableRow key={index} sx={{
-                                backgroundColor: index % 2 === 0 ? "#f5f5f5" : "white",
-                                '&:hover': { backgroundColor: "#9aada0" }
-                            }}>
-                                {Object.values(row).map((val, i) => (
-                                    <TableCell key={i} sx={{ padding: "10px" }}>
-                                        {val || "-"}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        ))}
+                        {data
+                            .filter(row => selectedValueLigue === "" || row[selectedColumnLigue] === selectedValueLigue)
+                            .filter(row => selectedValueRegion === "" || row[selectedColumnRegion] === selectedValueRegion)
+                            .map((row, index) => (
+                                <TableRow key={index} sx={{
+                                    backgroundColor: index % 2 === 0 ? "#f5f5f5" : "white",
+                                    '&:hover': { backgroundColor: "#9aada0" }
+                                }}>
+                                    {Object.values(row).map((val, i) => (
+                                        <TableCell key={i} sx={{ padding: "10px" }}>
+                                            {val || "-"}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-        </>
+        </Box>
     );
 }

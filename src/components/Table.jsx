@@ -25,7 +25,7 @@ export default function TableGame() {
     const [selectedValueRegion, setSelectedValueRegion] = useState("");
 
     useEffect(() => {
-        axios.get(process.env.REACT_APP_BACKEND_URL || "https://gameday-backend.onrender.com")
+        axios.get(process.env.REACT_APP_BACKEND_URL)
             .then(response => {
                 setData(response.data);
                 if (response.data.length > 0) {

@@ -14,26 +14,28 @@ import RegionFilter from "./RegionFilter";
 export default function TableGame() {
     const [data, setData] = useState([]);
 
-    // État pour le filtre Ligue
+    // Ligue
     const [selectedColumnLigue, setSelectedColumnLigue] = useState("");
     const [columnValuesLigue, setColumnValuesLigue] = useState([]);
     const [selectedValueLigue, setSelectedValueLigue] = useState("");
 
-    // État pour le filtre Région
+    // Region
     const [selectedColumnRegion, setSelectedColumnRegion] = useState("");
     const [columnValuesRegion, setColumnValuesRegion] = useState([]);
     const [selectedValueRegion, setSelectedValueRegion] = useState("");
 
     useEffect(() => {
-        axios.get("http://127.0.0.1:8000/api/data")
+        axios.get(process.env.REACT_APP_BACKEND_URL)
             .then(response => {
                 setData(response.data);
                 if (response.data.length > 0) {
+                    // Ligue
                     const columnIndexLigue = 14;
                     const columnKeyLigue = Object.keys(response.data[0])[columnIndexLigue];
                     setSelectedColumnLigue(columnKeyLigue);
                     setColumnValuesLigue([...new Set(response.data.map(row => row[columnKeyLigue]))]);
 
+                    // Region
                     const columnIndexRegion = 15;
                     const columnKeyRegion = Object.keys(response.data[0])[columnIndexRegion];
                     setSelectedColumnRegion(columnKeyRegion);

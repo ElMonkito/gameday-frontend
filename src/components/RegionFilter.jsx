@@ -6,7 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 export default function RegionFilter({ columnValues, selectedValue, setSelectedValue }) {
     return (
         <FormControl sx={{ minWidth: 200,marginLeft: "5%" }}>
-            <InputLabel>Ligue</InputLabel>
+            <InputLabel>Region</InputLabel>
             <Select value={selectedValue} onChange={(e) => setSelectedValue(e.target.value)} variant="standard">
                 <MenuItem value="">All</MenuItem>
                 {columnValues.map((val, i) => (

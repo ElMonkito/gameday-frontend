@@ -1,7 +1,16 @@
 import Home from "./pages/Home";
+import {createTheme, ThemeProvider} from "@mui/material";
+
 function App() {
+    const theme = createTheme({
+        typography: {
+            fontFamily: "Kanit",
+        },
+    });
     return (
-    <Home />
+        <ThemeProvider theme={theme}>
+            <Home/>
+        </ThemeProvider>
     )
 }
 

@@ -14,12 +14,12 @@ import RegionFilter from "./RegionFilter";
 export default function TableGame() {
     const [data, setData] = useState([]);
 
-    // Ligues
+    // Ligue
     const [selectedColumnLigue, setSelectedColumnLigue] = useState("");
     const [columnValuesLigue, setColumnValuesLigue] = useState([]);
     const [selectedValueLigue, setSelectedValueLigue] = useState("");
 
-    // Regions
+    // Region
     const [selectedColumnRegion, setSelectedColumnRegion] = useState("");
     const [columnValuesRegion, setColumnValuesRegion] = useState([]);
     const [selectedValueRegion, setSelectedValueRegion] = useState("");
